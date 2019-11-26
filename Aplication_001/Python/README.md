@@ -41,3 +41,33 @@ CMD ["python3.6", "main.py"]
 ```
 
 O primeiro passo começa com uma imagem Python oficial, com o ambiente Python 3.6 instalado. O comando COPY irá passar um arquivo requirements.txt para que sejam baixadas as bibliotecas necessárias. O resultado é uma imagem contendo todas as dependencias necessárias.
+
+* Salvar imagem no dockerhub: Para enviar uma imagem para o DockerHub é preciso fazer o login:
+
+```bash
+docker login
+```
+
+E enviar a imagem: (é preciso nomeá-la)
+
+```bash
+docker image tag pyhello samico/pyhello
+
+docker image push  samico/pyhello
+```
+
+## Kurbenetes
+
+Para inicializar o kubernetes na máquina local abra o Docker Desktop Preferences e selecione Kurbenetes e marqui Enable. Para executar a imagem que construímos abra o terminal e execute:
+
+```bash
+kubectl run demo --image=samico/pyhello --port=9999 app=demo
+
+kubectl port-forward deploy/demo 9999:9999
+```
+
+Verificar status:
+
+```bash
+kubectl get pods --selector app=demo
+```
